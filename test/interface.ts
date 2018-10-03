@@ -36,6 +36,11 @@ describe('interface', () => {
     assertFailure(T.decode({ a: 1 }), ['Invalid value 1 supplied to : { a: string }/a: string'])
   })
 
+  it('should fail validating on missing key', () => {
+    const T = t.interface({ a: t.any })
+    assertFailure(T.decode({}), ['Invalid value undefined supplied to : { a: any }/a: any'])
+  })
+
   it('should support the alias `type`', () => {
     const T = t.type({ a: t.string })
     assertSuccess(T.decode({ a: 's' }))

@@ -533,7 +533,9 @@ export const type = <P extends Props>(
           const k = keys[i]
           const ok = o[k]
           const type = types[i]
-          const validation = type.validate(ok, appendContext(c, k, type))
+          const validation = o.hasOwnProperty(k)
+            ? type.validate(ok, appendContext(c, k, type))
+            : failure(ok, appendContext(c, k, type))
           if (validation.isLeft()) {
             pushAll(errors, validation.value)
           } else {
